@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+OpenIDE-Module: dsemikin.eolhighlighting
+OpenIDE-Module-Localizing-Bundle: dsemikin/eolhighlighting/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

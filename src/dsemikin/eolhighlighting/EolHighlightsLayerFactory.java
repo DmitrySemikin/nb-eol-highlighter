@@ -2,7 +2,6 @@ package dsemikin.eolhighlighting;
 
 import javax.swing.text.Document;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
-import org.netbeans.spi.editor.highlighting.HighlightsContainer;
 import org.netbeans.spi.editor.highlighting.HighlightsLayer;
 import org.netbeans.spi.editor.highlighting.HighlightsLayerFactory;
 import org.netbeans.spi.editor.highlighting.ZOrder;
@@ -16,12 +15,13 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
     @Override
     public HighlightsLayer[] createLayers(Context context) {
 
+        EolHighlightsContainerOwner highlightsContainerOwner = getHighlightsContainerOwner(context);
         final HighlightsLayer[] highlightsLayers = new HighlightsLayer[] {
             HighlightsLayer.create(
                     LAYER_TYPE_ID,
                     Z_ORDER,
-                    isFixedSize(),
-                    getHighlightsContainer(context)
+                    highlightsContainerOwner.isFixedSize(),
+                    highlightsContainerOwner.getHighlightsContainer()
             )
         };
 
@@ -37,23 +37,22 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
 
     private EolHighlightsContainerOwner getEolHighlightsContainerOwner(final Document document) {
 
-        EolHighlightsContainerOwner eolHighlightsContainerProvider =
+        EolHighlightsContainerOwner eolHighlightsContainerOwner =
                 (EolHighlightsContainerOwner) document.getProperty(EolHighlightsContainerOwner.class);
 
-        if (eolHighlightsContainerProvider == null) {
-            eolHighlightsContainerProvider = new EolHighlightsContainerOwner(document);
-            document.putProperty(EolHighlightsContainerOwner.class, eolHighlightsContainerProvider);
+        if (eolHighlightsContainerOwner == null) {
+            eolHighlightsContainerOwner = new EolHighlightsContainerOwner(document);
+            document.putProperty(EolHighlightsContainerOwner.class, eolHighlightsContainerOwner);
         }
 
-        return eolHighlightsContainerProvider;
+        return eolHighlightsContainerOwner;
     }
 
-    private HighlightsContainer getHighlightsContainer(final Context context) {
+    private EolHighlightsContainerOwner getHighlightsContainerOwner(final Context context) {
 
         final Document document = context.getDocument();
         final EolHighlightsContainerOwner highlightsContainerOwner = getEolHighlightsContainerOwner(document);
-        final HighlightsContainer highlightsContainer = highlightsContainerOwner.getHighlightsContainer();
 
-        return highlightsContainer;
+        return highlightsContainerOwner;
     }
 }

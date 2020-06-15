@@ -50,6 +50,12 @@ import org.openide.util.WeakListeners;
         return offsetBag;
     }
 
+    /*package*/ boolean isFixedSize() {
+        // Is the text fixed size?
+        // The value should be returned based on the AttributeSet used.
+        return true;
+    }
+
     private void scheduleEolHighlightsUpdate() {
         if (highlightsUpdateTask.isEmpty()) {
             // todo: should we do something about multithreading?

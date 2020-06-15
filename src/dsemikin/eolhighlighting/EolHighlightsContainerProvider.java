@@ -66,6 +66,7 @@ import org.openide.util.WeakListeners;
         Document document = weakDocument.get();
         if (document != null) {
             try {
+                offsetBag.clear();
                 final String text = document.getText(0, document.getLength());
                 for (int index = text.indexOf(EOL); index >= 0; index = text.indexOf(EOL, index + 1)) {
                     offsetBag.addHighlight(index, index + 1, DEFAULT_COLORS);                }
@@ -102,7 +103,6 @@ import org.openide.util.WeakListeners;
         }
 
         private void handleDocumentChange() {
-            EolHighlightsContainerProvider.this.offsetBag.clear();
             EolHighlightsContainerProvider.this.scheduleEolHighlightsUpdate();
         }
 

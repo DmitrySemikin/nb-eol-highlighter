@@ -16,7 +16,7 @@ import org.openide.util.Exceptions;
 import org.openide.util.RequestProcessor;
 import org.openide.util.WeakListeners;
 
-/*package*/ final class EolHighlightsContainerProvider {
+/*package*/ final class EolHighlightsContainerOwner {
 
     private static final String EOL = "\n";
 
@@ -35,10 +35,10 @@ import org.openide.util.WeakListeners;
     private Optional<RequestProcessor.Task> highlightsUpdateTask = Optional.empty();
     private final EolHighlightsDocumentListener documentListener; // we need strong reference to it. See WeakListeners docs.
 
-    /*package*/ EolHighlightsContainerProvider(final Document document) {
+    /*package*/ EolHighlightsContainerOwner(final Document document) {
         weakDocument = new WeakReference<>(document);
         offsetBag = new OffsetsBag(document);
-        requestProcessor = new RequestProcessor(EolHighlightsContainerProvider.class);
+        requestProcessor = new RequestProcessor(EolHighlightsContainerOwner.class);
         documentListener = new EolHighlightsDocumentListener();
 
         document.addDocumentListener(WeakListeners.document(documentListener, document));
@@ -81,7 +81,7 @@ import org.openide.util.WeakListeners;
     private class EolHighlightsUpdateTask implements Runnable {
         @Override
         public void run() {
-            EolHighlightsContainerProvider.this.updateHighlights();
+            EolHighlightsContainerOwner.this.updateHighlights();
         }
     }
 
@@ -103,7 +103,7 @@ import org.openide.util.WeakListeners;
         }
 
         private void handleDocumentChange() {
-            EolHighlightsContainerProvider.this.scheduleEolHighlightsUpdate();
+            EolHighlightsContainerOwner.this.scheduleEolHighlightsUpdate();
         }
 
     }

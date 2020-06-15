@@ -10,7 +10,7 @@ import org.netbeans.spi.editor.highlighting.ZOrder;
 @MimeRegistration(mimeType = "", service = HighlightsLayerFactory.class)
 public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  {
 
-    private static final String LAYER_TYPE_ID = EolHighlightsContainerProvider.class.getName();
+    private static final String LAYER_TYPE_ID = EolHighlightsContainerOwner.class.getName();
     private static final ZOrder Z_ORDER = ZOrder.CARET_RACK.forPosition(2000); // todo: Check, that it is appropriate
 
     @Override
@@ -35,14 +35,14 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
         return true;
     }
 
-    private EolHighlightsContainerProvider getEolHighlightsContainerProvider(final Document document) {
+    private EolHighlightsContainerOwner getEolHighlightsContainerProvider(final Document document) {
 
-        EolHighlightsContainerProvider eolHighlightsContainerProvider =
-                (EolHighlightsContainerProvider) document.getProperty(EolHighlightsContainerProvider.class);
+        EolHighlightsContainerOwner eolHighlightsContainerProvider =
+                (EolHighlightsContainerOwner) document.getProperty(EolHighlightsContainerOwner.class);
 
         if (eolHighlightsContainerProvider == null) {
-            eolHighlightsContainerProvider = new EolHighlightsContainerProvider(document);
-            document.putProperty(EolHighlightsContainerProvider.class, eolHighlightsContainerProvider);
+            eolHighlightsContainerProvider = new EolHighlightsContainerOwner(document);
+            document.putProperty(EolHighlightsContainerOwner.class, eolHighlightsContainerProvider);
         }
 
         return eolHighlightsContainerProvider;
@@ -51,7 +51,7 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
     private HighlightsContainer getHighlightsContainer(final Context context) {
 
         final Document document = context.getDocument();
-        final EolHighlightsContainerProvider provider = getEolHighlightsContainerProvider(document);
+        final EolHighlightsContainerOwner provider = getEolHighlightsContainerProvider(document);
         final HighlightsContainer highlightsContainer = provider.getHighlightsContainer();
 
         return highlightsContainer;

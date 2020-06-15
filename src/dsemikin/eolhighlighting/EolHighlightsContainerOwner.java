@@ -105,6 +105,5 @@ import org.openide.util.WeakListeners;
         private void handleDocumentChange() {
             EolHighlightsContainerOwner.this.scheduleEolHighlightsUpdate();
         }
-
     }
 }

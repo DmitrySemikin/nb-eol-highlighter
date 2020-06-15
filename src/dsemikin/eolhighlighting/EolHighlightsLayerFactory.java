@@ -35,7 +35,7 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
         return true;
     }
 
-    private EolHighlightsContainerOwner getEolHighlightsContainerProvider(final Document document) {
+    private EolHighlightsContainerOwner getEolHighlightsContainerOwner(final Document document) {
 
         EolHighlightsContainerOwner eolHighlightsContainerProvider =
                 (EolHighlightsContainerOwner) document.getProperty(EolHighlightsContainerOwner.class);
@@ -51,8 +51,8 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
     private HighlightsContainer getHighlightsContainer(final Context context) {
 
         final Document document = context.getDocument();
-        final EolHighlightsContainerOwner provider = getEolHighlightsContainerProvider(document);
-        final HighlightsContainer highlightsContainer = provider.getHighlightsContainer();
+        final EolHighlightsContainerOwner highlightsContainerOwner = getEolHighlightsContainerOwner(document);
+        final HighlightsContainer highlightsContainer = highlightsContainerOwner.getHighlightsContainer();
 
         return highlightsContainer;
     }

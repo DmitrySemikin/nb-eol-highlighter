@@ -28,13 +28,6 @@ public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  
         return highlightsLayers;
     }
 
-    private boolean isFixedSize() {
-        // todo: Actually this information must ber retrieved from
-        // HighlightsContainerProvider. We don't know, if highlights actually
-        // modify e.g. font family etc.
-        return true;
-    }
-
     private EolHighlightsContainerOwner getEolHighlightsContainerOwner(final Document document) {
 
         EolHighlightsContainerOwner eolHighlightsContainerOwner =

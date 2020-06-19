@@ -9,43 +9,43 @@ import org.netbeans.spi.editor.highlighting.ZOrder;
 @MimeRegistration(mimeType = "", service = HighlightsLayerFactory.class)
 public final class EolHighlightsLayerFactory implements HighlightsLayerFactory  {
 
-    private static final String LAYER_TYPE_ID = EolHighlightsContainerOwner.class.getName();
+    private static final String LAYER_TYPE_ID = EolHighlightsContainer.class.getName();
     private static final ZOrder Z_ORDER = ZOrder.CARET_RACK.forPosition(2000); // todo: Check, that it is appropriate
 
     @Override
     public HighlightsLayer[] createLayers(Context context) {
 
-        EolHighlightsContainerOwner highlightsContainerOwner = getHighlightsContainerOwner(context);
+        EolHighlightsContainer highlightsContainer = getHighlightsContainer(context);
         final HighlightsLayer[] highlightsLayers = new HighlightsLayer[] {
             HighlightsLayer.create(
                     LAYER_TYPE_ID,
                     Z_ORDER,
-                    highlightsContainerOwner.isFixedSize(),
-                    highlightsContainerOwner.getHighlightsContainer()
+                    highlightsContainer.isFixedSize(),
+                    highlightsContainer
             )
         };
 
         return highlightsLayers;
     }
 
-    private EolHighlightsContainerOwner getEolHighlightsContainerOwner(final Document document) {
+    private EolHighlightsContainer getEolHighlightsContainer(final Document document) {
 
-        EolHighlightsContainerOwner eolHighlightsContainerOwner =
-                (EolHighlightsContainerOwner) document.getProperty(EolHighlightsContainerOwner.class);
+        EolHighlightsContainer eolHighlightsContainer =
+                (EolHighlightsContainer) document.getProperty(EolHighlightsContainer.class);
 
-        if (eolHighlightsContainerOwner == null) {
-            eolHighlightsContainerOwner = new EolHighlightsContainerOwner(document);
-            document.putProperty(EolHighlightsContainerOwner.class, eolHighlightsContainerOwner);
+        if (eolHighlightsContainer == null) {
+            eolHighlightsContainer = new EolHighlightsContainer(document);
+            document.putProperty(EolHighlightsContainer.class, eolHighlightsContainer);
         }
 
-        return eolHighlightsContainerOwner;
+        return eolHighlightsContainer;
     }
 
-    private EolHighlightsContainerOwner getHighlightsContainerOwner(final Context context) {
+    private EolHighlightsContainer getHighlightsContainer(final Context context) {
 
         final Document document = context.getDocument();
-        final EolHighlightsContainerOwner highlightsContainerOwner = getEolHighlightsContainerOwner(document);
+        final EolHighlightsContainer highlightsContainer = getEolHighlightsContainer(document);
 
-        return highlightsContainerOwner;
+        return highlightsContainer;
     }
 }
